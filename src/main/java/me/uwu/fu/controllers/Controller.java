@@ -2,6 +2,7 @@ package me.uwu.fu.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Controller {
 
@@ -32,7 +34,8 @@ public class Controller {
     public JFXButton option7Button;
     public JFXButton option8Button;
 
-    public JFXDatePicker date;
+    public JFXDatePicker datePicker;
+    public JFXTimePicker timePicker;
 
 
     public void credits(MouseEvent mouseEvent) throws URISyntaxException {
@@ -42,9 +45,16 @@ public class Controller {
     public void loadDate(MouseEvent mouseEvent) {
         clear();
         optionNone.setVisible(false);
-        date = new JFXDatePicker(FileUtilities.getFileDate("a.gif"));
-        date.setDefaultColor(Color.web("#870fff"));
-        controls.getChildren().add(date);
+
+        datePicker = new JFXDatePicker(FileUtilities.getFileDate("a.gif"));
+        datePicker.setDefaultColor(Color.web("#870fff"));
+        controls.getChildren().add(datePicker);
+
+        timePicker= new JFXTimePicker(LocalTime.now());
+        timePicker.setIs24HourView(true);
+        timePicker.setLayoutY(40);
+        timePicker.setDefaultColor(Color.web("#870fff"));
+        controls.getChildren().add(timePicker);
     }
 
     public void clear(){
@@ -80,8 +90,8 @@ public class Controller {
     }
 
     public void onSave(MouseEvent mouseEvent) throws ParseException {
-        LocalDate localDate = date.getValue();
+        LocalDate localDate = datePicker.getValue();
         System.out.println(localDate);
-        FileUtilities.editFileDate("a.gif", date.getValue().toString());
+        FileUtilities.editFileDate("a.gif", datePicker.getValue().toString(), timePicker.getValue().toString());
     }
 }
